@@ -28,6 +28,6 @@ public class PlayerMovement : MonoBehaviour
         if (keyboard.aKey.isPressed) direction += Vector2.left;
         if (keyboard.dKey.isPressed) direction += Vector2.right;
         
-        transform.Translate(direction * moveSpeed * Time.deltaTime);
+        transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
     }
 }
