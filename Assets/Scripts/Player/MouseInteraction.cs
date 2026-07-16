@@ -1,26 +1,34 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 
 public class PlaceTile : MonoBehaviour
 {
-    private float mouseDistance;
     public Tilemap targetTilemap;
-    public TileBase replacementTile; // Assign the tile you want to place
+    public TileBase replacementTile;
+
+    [SerializeField]
+    private float maxPlaceDistance = 2.5f;
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Mouse.current == null) return;
+
+        if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            mouseDistance = transform.GetComponent<RotateToMouse>().mouseDistanceFromPlayer;
-            if (mouseDistance < 2.5)
+            // Mouse screen position
+            Vector2 mouseScreen = Mouse.current.position.ReadValue();
+
+            // Convert to world position
+            Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
+            mouseWorld.z = transform.position.z;
+
+            // Check if mouse is close enough to player
+            float distance = Vector2.Distance(transform.position, mouseWorld);
+
+            if (distance <= maxPlaceDistance)
             {
-                // 1. Get world position from mouse click
-                Vector3 worldPoint = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-                // 2. Convert world position to grid cell coordinates
-                Vector3Int cellPosition = targetTilemap.WorldToCell(worldPoint);
-
-                // 3. Set the new tile at that position
+                Vector3Int cellPosition = targetTilemap.WorldToCell(mouseWorld);
                 targetTilemap.SetTile(cellPosition, replacementTile);
             }
         }

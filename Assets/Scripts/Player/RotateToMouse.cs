@@ -1,27 +1,21 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class RotateToMouse : MonoBehaviour
 {
-    public float mouseDistanceFromPlayer = 0f;
-
     void Update()
     {
-        // 1. Get mouse position in world space
-        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if (Mouse.current == null) return;
 
-        // 2. Calculate direction from sprite to mouse
-        // Note: For 2D, we ignore the Z axis (set it to sprite's Z)
-        mouseDistanceFromPlayer = Mathf.Sqrt(Mathf.Pow(mouseWorldPosition.x - transform.position.x,2) + Mathf.Pow(mouseWorldPosition.y - transform.position.y,2));
-        Vector2 direction = new Vector2(
-            mouseWorldPosition.x - transform.position.x,
-            mouseWorldPosition.y - transform.position.y
-        );
+        Vector2 mouseScreen = Mouse.current.position.ReadValue();
 
-        // 3. Calculate angle and apply rotation
-        // Mathf.Atan2 returns the angle in radians; Rad2Deg converts it
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(mouseScreen);
+        mouseWorld.z = transform.position.z;
+
+        Vector2 direction = mouseWorld - transform.position;
+
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
-        // Use -90 offset if your sprite faces "Up" by default
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+   
+        transform.rotation = Quaternion.Euler(0, 0, angle);
     }
 }
