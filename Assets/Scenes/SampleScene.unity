@@ -259,7 +259,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: 600, y: 45}
+  m_SizeDelta: {x: 800, y: 50}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &137159514
 MonoBehaviour:
@@ -815,6 +815,7 @@ GameObject:
   - component: {fileID: 1302009155}
   - component: {fileID: 1302009157}
   - component: {fileID: 1302009156}
+  - component: {fileID: 1302009158}
   m_Layer: 5
   m_Name: TaskBarFill
   m_TagString: Untagged
@@ -839,7 +840,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 560.1, y: 45}
+  m_SizeDelta: {x: 368, y: 50}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1302009156
 MonoBehaviour:
@@ -879,6 +880,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1302009154}
   m_CullTransparentMesh: 1
+--- !u!114 &1302009158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1302009154}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae15777c2696e664cba8c2c24fc617e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BarFill
+  MaxWidth: 800
+  MaxHeight: 50
+  Percentage: 0.46
+  Horizontal: 1
 --- !u!1 &1900442049
 GameObject:
   m_ObjectHideFlags: 0
