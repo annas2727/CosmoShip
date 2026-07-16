@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -11,14 +12,22 @@ public class PlayerMovement : MonoBehaviour
     {
         // Get input (WASD or Arrow Keys)
         // GetAxisRaw provides snappy movement (0 or 1)
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+
+        HandleMovement();
     }
 
-    void FixedUpdate()
+    void HandleMovement()
     {
-        // Normalize the vector so diagonal movement isn't faster
-        // Apply movement to the Rigidbody velocity
-        rb.MovePosition(rb.position + movement.normalized * moveSpeed * Time.fixedDeltaTime);
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard == null) return;
+
+        Vector2 direction = Vector2.zero;
+    
+        if (keyboard.wKey.isPressed) direction += Vector2.up;
+        if (keyboard.sKey.isPressed) direction += Vector2.down;
+        if (keyboard.aKey.isPressed) direction += Vector2.left;
+        if (keyboard.dKey.isPressed) direction += Vector2.right;
+        
+        transform.Translate(direction * moveSpeed * Time.deltaTime);
     }
 }
